@@ -8,8 +8,6 @@ function App() {
   function getStarted() {
     setStart(state => !state)
   }
-
-
   return (
     <div className="App container mx-auto px-10 lg:px-40 mb-10">
       {start ? <Quiz /> : <Start start={getStarted} />}

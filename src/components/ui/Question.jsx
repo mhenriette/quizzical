@@ -9,11 +9,10 @@ const Question = ({ question, answers, selectAnswer, id, selected, correct, inco
     return <div className="flex flex-col gap-y-4 border-b-2 border-b-[#DBDEF0] items-start mt-5">
         <Heading2 children={question} />
         <div className="flex gap-x-5 mb-4 flex-wrap lg:flex-row gap-y-5">
-            {answers.sort().map((el, index) => {
+            {answers.sort().map((answer, index) => {
                 let check = selected === index
                 let text = answers[index];
                 let right = !incorrect_answers.includes(text)
-                console.log(check, quiz)
                 const style = classNames({
                     'hover:bg-indigo-300': correct == null,
                     'bg-yellow-100 ': check && quiz,
@@ -22,7 +21,7 @@ const Question = ({ question, answers, selectAnswer, id, selected, correct, inco
 
                 })
                 return <Button
-                    text={el}
+                    text={answer}
                     key={index}
                     index={index}
                     link={() => selectAnswer(index, id)}

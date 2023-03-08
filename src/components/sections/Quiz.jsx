@@ -11,9 +11,9 @@ const Quiz = () => {
         setLoad(true)
         async function getdata() {
             const resp = await fetch('https://opentdb.com/api.php?amount=10&difficulty=medium&type=multiple')
-            const data = await resp.json()
-            let questions = data.results.map(el => ({
-                ...el, answers: [el['correct_answer'], ...el['incorrect_answers']], id: nanoid(), selected: null, correct: null
+            const info = await resp.json()
+            let questions = info.results.map(element => ({
+                ...element, answers: [element['correct_answer'], ...element['incorrect_answers']], id: nanoid(), selected: null, correct: null
             }))
             setData(questions)
             setLoad(false)
@@ -22,24 +22,22 @@ const Quiz = () => {
     }, [])
 
     function selectAnswer(index, id) {
-        const updateInfo = data.map((el) => {
-            return el.id === id ?
-                { ...el, selected: index } :
-                { ...el }
+        const updateInfo = data.map((question) => {
+            return question.id === id ?
+                { ...question, selected: index } :
+                { ...question }
         })
         setData(updateInfo)
-        console.log(`selected button is ${index}`)
     }
 
     function checkAnswers() {
-        let correction = data.map((el, index) => {
-            let answer = el.answers[el.selected]
-            let arr = el.incorrect_answers
-            let correct = !arr.includes(answer)
-            return { ...el, correct }
+        let correction = data.map((element, index) => {
+            let answer = element.answers[element.selected]
+            let incorrectAnswer = element.incorrect_answers
+            let correct = !incorrectAnswer.includes(answer)
+            return { ...element, correct }
         })
         setData(correction)
-        console.log(correction)
         setquiz(false)
 
 
@@ -50,7 +48,7 @@ const Quiz = () => {
                 <div className="h-screen flex justify-center items-center">loading...</div>
                 :
                 <>
-                    <div className="mb-5"> {data.map(el => <Question {...el} key={el.id} selectAnswer={selectAnswer} quiz={quiz} />)}</div>
+                    <div className="mb-5"> {data.map(element => <Question {...element} key={element.id} selectAnswer={selectAnswer} quiz={quiz} />)}</div>
                     <Button text='Check answers' className='bg-[#4D5B9E] text-white' link={checkAnswers} />
                 </>
 
