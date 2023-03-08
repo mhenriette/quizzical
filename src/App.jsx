@@ -1,13 +1,16 @@
 import { useState } from 'react'
-
 import './App.css'
-
+import Quiz from './components/sections/Quiz'
+import Start from './components/sections/Start'
 function App() {
-  const [count, setCount] = useState(0)
+  const [start, setStart] = useState(false)
 
+  function getStarted() {
+    setStart(state => !state)
+  }
   return (
-    <div className="App">
-      <div className='flex h-screen justify-center items-center font-bold text-9xl text-indigo-500'>Hello world</div>
+    <div className="App container mx-auto px-10 lg:px-40 mb-10">
+      {start ? <Quiz /> : <Start start={getStarted} />}
     </div>
   )
 }
